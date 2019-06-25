@@ -15,8 +15,8 @@ app.set('view engine','handlebars');
 app.use('/public',express.static(path.join(__dirname,'public')));
 
 const s3 = new AWS.S3({
-    accessKeyId: "AKIAJ56OYQ7V6HBUZXNQ",
-    secretAccessKey: "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",
+    accessKeyId: "AKIAJVDPOODLBYE4O53A",
+    secretAccessKey: "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",
     Bucket: "resume-datasets"
 });
 const storage = multer.diskStorage({
@@ -37,14 +37,12 @@ const storage = multer.diskStorage({
 
   //file upload
 app.post("/send",(req,res)=>{
+  var resObj = res;
   upload(req, res, (err) => {
     if (err) throw err
     let array=req.files;
-    for(obj in array){
-     uploadFile(array[obj]["path"],array[obj]["filename"]);
-     var string = encodeURIComponent('File uploaded successfully');
-     res.redirect('/?valid=' + string+'&&color=red')
-    }
+     uploadFile(array[0]["path"],array[0]["filename"], resObj);
+    //  res.send('File Uploaded successfully')
   })
 })
 
@@ -52,6 +50,7 @@ const uploadFile=(file,fullname,res)=>{
   fs.readFile(file,(err,data)=>{
       if (err){
           throw err;
+
       }
       console.log(data);
       const params={
@@ -61,12 +60,12 @@ const uploadFile=(file,fullname,res)=>{
       }
       s3.upload(params,(err,data)=>{
           if(err) {
-            var string = encodeURIComponent('Some error occured');
-            res.redirect('/?valid=' + string+'&&color=red')
             throw err;
+            res.send("Some error occured")
           }
 
           console.log("file uploaded");
+          res.send("File uploaded succcessfully")
           
       })
   })
