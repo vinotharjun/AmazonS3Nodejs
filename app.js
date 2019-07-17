@@ -17,7 +17,7 @@ console.log(process.env.AWS_ACCESS,process.env.AWS_SECRET);
 const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS,
     secretAccessKey: process.env.AWS_SECRET,
-    Bucket: "resume-datasets"
+    Bucket: "resume-dataset"
 });
 const storage = multer.diskStorage({
     destination: './public/uploads/',
