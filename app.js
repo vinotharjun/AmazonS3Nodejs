@@ -15,8 +15,8 @@ app.set('view engine','handlebars');
 app.use('/public',express.static(path.join(__dirname,'public')));
 
 const s3 = new AWS.S3({
-    accessKeyId: "AKIAJVDPOODLBYE4O53A",
-    secretAccessKey: "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",
+    accessKeyId: process.env.AWS_ACCESS,
+    secretAccessKey: process.env.AWS_SECRET,
     Bucket: "resume-datasets"
 });
 const storage = multer.diskStorage({
