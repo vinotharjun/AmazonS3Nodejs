@@ -13,7 +13,7 @@ const url = require('url');
 app.engine("handlebars",hbs())
 app.set('view engine','handlebars');
 app.use('/public',express.static(path.join(__dirname,'public')));
-
+console.log(process.env.AWS_ACCESS,process.env.AWS_SECRET);
 const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS,
     secretAccessKey: process.env.AWS_SECRET,
